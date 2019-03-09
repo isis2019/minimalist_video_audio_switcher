@@ -21,6 +21,7 @@
 #include "../../mvas_panel_driver.h"
 #include "../../mvas_error.h"
 #include "../../ATMEGA2560/mvas_panel/mvas_panel_macros.h"
+#include "mvas_qt_toolbar.h"
 
 namespace mvas
 {
@@ -42,6 +43,8 @@ namespace mvas
         panel_driver m_driver;
         /**< Button to exit the application **/
         QToolButton* m_exit;
+
+        toolbar* m_tb;
 
     public:
         /**

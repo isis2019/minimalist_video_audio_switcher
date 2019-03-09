@@ -23,6 +23,7 @@ namespace mvas
         m_audio_gui = new audio_interface(this);
         m_exit = new QToolButton(this);
             m_exit->setText("X");
+            m_tb = new toolbar(this);
     }
 
     int main_window::set_graphics()
@@ -55,8 +56,12 @@ namespace mvas
         main_layout->addWidget(m_audio_gui);
         main_layout->addWidget(proxy);
 
+        QVBoxLayout* top_layout = new QVBoxLayout(this);
+        top_layout->addWidget(m_tb);
+        top_layout->addLayout(main_layout);
+
         QWidget* proxy2 = new QWidget(this);
-            proxy2->setLayout(main_layout);
+            proxy2->setLayout(top_layout);
         setCentralWidget(proxy2);
     }
 
@@ -84,6 +89,7 @@ namespace mvas
 
         return MVAS_ERR_SUCCESS;
     }
+
     void main_window::refresh()
     {
         static uint16_t old_ratio = 0;
