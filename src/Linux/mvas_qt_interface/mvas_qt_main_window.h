@@ -20,7 +20,7 @@
 #include "mvas_qt_utilities.h"
 #include "../../mvas_panel_driver.h"
 #include "../../mvas_error.h"
-#include "../../mvas_panel/mvas_panel_macros.h"
+#include "../../ATMEGA2560/mvas_panel/mvas_panel_macros.h"
 
 namespace mvas
 {

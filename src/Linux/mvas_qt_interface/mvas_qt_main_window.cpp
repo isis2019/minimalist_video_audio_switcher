@@ -27,7 +27,7 @@ namespace mvas
 
     int main_window::set_graphics()
     {
-        const char* main_stylesheet = mvas::load_stylesheet(get_src_path().append("/mvas_qt_interface/mvas_qt_interface/stylesheets/mvas_main_window.css").c_str());
+        const char* main_stylesheet = mvas::load_stylesheet(get_src_path().append("/Linux/mvas_qt_interface/stylesheets/mvas_main_window.css").c_str());
 
         if(main_stylesheet)
             setStyleSheet(main_stylesheet);
