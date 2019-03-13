@@ -8,6 +8,7 @@
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
+
     mvas::main_window* w = new mvas::main_window();
     w->show();
 

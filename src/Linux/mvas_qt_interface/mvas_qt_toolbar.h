@@ -17,5 +17,7 @@ namespace mvas
 
     public slots:
         void check_decklink();
+
+        friend class main_window;
     };
 }

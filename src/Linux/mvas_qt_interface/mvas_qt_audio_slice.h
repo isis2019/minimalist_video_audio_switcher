@@ -12,6 +12,7 @@
 #include <QSlider>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QGroupBox>
 #include <QPushButton>
 
 namespace mvas
@@ -22,8 +23,6 @@ namespace mvas
      */
     class audio_slice : public QWidget
     {
-        /**< Title of the slice "input 1" for example **/
-        QLabel* m_title;
         /**< Dial used for pan effect from left to right **/
         QDial*  m_pan;
         /**< Slider used as a volume fader **/
@@ -34,10 +33,9 @@ namespace mvas
     public:
         /**
          * @brief audio_slice Parameters constructor
-         * @param title Title of the slice
          * @param parent Parent's widget
          */
-        audio_slice(const QString& title, QWidget* parent);
+        audio_slice(QWidget* parent);
 
         friend class audio_interface;
         friend class main_window;

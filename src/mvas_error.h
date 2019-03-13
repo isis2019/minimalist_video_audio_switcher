@@ -8,6 +8,7 @@
 #pragma once
 
 #include <cstdio>
+#include <string>
 
 /** Send when process is success **/
 #define MVAS_ERR_SUCCESS 0
@@ -15,6 +16,8 @@
 #define MVAS_ERR_FILE_NOT_FOUND 1
 /**Send when the arduino panel is not detected **/
 #define MVAS_ERR_ARDUINO_PANEL_NOT_FOUND 2
+
+#define MVAS_ERROR_NAMES (Success, File not found, Panel not found)
 
 namespace mvas
 {
@@ -24,4 +27,11 @@ namespace mvas
      * @param err Error number you want to print
      */
     void print_error(const int err);
+
+    /**
+     * @brief get_error_name return the name of the error for displaying purpose
+     * @param err number of the error
+     * @return Error name as a standard c++ string
+     */
+    std::string get_error_name(const int err);
 }

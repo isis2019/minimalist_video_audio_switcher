@@ -8,6 +8,7 @@
 #pragma once
 
 #include <QApplication>
+#include <QDesktopWidget>
 #include <QMainWindow>
 #include <QPalette>
 #include <QTimer>
@@ -41,9 +42,7 @@ namespace mvas
         video_interface* m_video_gui;
         /**< Object for manipulating panel IO **/
         panel_driver m_driver;
-        /**< Button to exit the application **/
-        QToolButton* m_exit;
-
+        /**< Toolbar object for displaying information **/
         toolbar* m_tb;
 
     public:

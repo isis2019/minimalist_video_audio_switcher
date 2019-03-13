@@ -15,6 +15,8 @@
 
 #include "mvas_qt_video_preview.h"
 #include "../../mvas_macros.h"
+#include "../../mvas_error.h"
+#include "mvas_qt_utilities.h"
 
 namespace mvas
 {
@@ -65,6 +67,12 @@ namespace mvas
          * the video interface widget
          */
         void set_widgets_layout();
+
+       /**
+        * @brief set_graphics apply all graphics style for the different widget
+        * @return error code
+        */
+        int set_graphics();
 
         /**
          * @brief connect_widgets connect the features for all related widgets

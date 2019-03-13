@@ -13,16 +13,15 @@ namespace mvas
         QHBoxLayout* layout=new QHBoxLayout(this);
         for (int i=0; i<4; i++)
         {
-            m_audio_slices[i]=new audio_slice(QString("in ").append(QString::number(i+1)),this);
-            layout->addWidget(m_audio_slices[i]);
+            m_audio_slices[i]=new audio_slice(this);
+            layout->addWidget(wrap_in_groupbox(m_audio_slices[i],QString("in ").append(QString::number(i+1)),this));
         }
-
-        m_audio_slices[4]=new audio_slice("AUX",this);
-        layout->addWidget(m_audio_slices[4]);
-        m_audio_slices[5]=new audio_slice("L",this);
-        layout->addWidget(m_audio_slices[5]);
-        m_audio_slices[6]=new audio_slice("R",this);
-        layout->addWidget(m_audio_slices[6]);
+        m_audio_slices[4]=new audio_slice(this);
+        layout->addWidget(wrap_in_groupbox(m_audio_slices[4],"AUX",this));
+        m_audio_slices[5]=new audio_slice(this);
+        layout->addWidget(wrap_in_groupbox(m_audio_slices[5],"L",this));
+        m_audio_slices[6]=new audio_slice(this);
+        layout->addWidget(wrap_in_groupbox(m_audio_slices[6],"R",this));
         setLayout(layout);
      }
 }

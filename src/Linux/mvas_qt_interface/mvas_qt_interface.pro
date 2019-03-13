@@ -32,4 +32,5 @@ HEADERS += \
     mvas_qt_toolbar.h
 
 DISTFILES += \
-    stylesheets/mvas_main_window.css
+    stylesheets/mvas_main_window.css \
+    stylesheets/mvas_video_interface.css

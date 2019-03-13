@@ -11,6 +11,7 @@ namespace mvas
     video_interface::video_interface(QWidget* parent) : QWidget(parent)
     {
         init_widgets();
+        set_graphics();
         set_widgets_layout();
         connect_widgets();
     }
@@ -22,7 +23,6 @@ namespace mvas
 
         for(size_t i=0; i<MVAS_PRG_BUT_COUNT; i++)
         {
-
             QString button_title("PG");
             button_title.append(QString::number(i+1));
             m_prg_buts[i] = new QPushButton(button_title,this);
@@ -36,22 +36,19 @@ namespace mvas
         }
 
         m_tbar = new QSlider(Qt::Vertical, this);
-
         m_cut = new QPushButton("CUT",this);
         m_auto_trans = new QPushButton("AUTO-TRANS",this);
         m_ftb = new QPushButton("FTB",this);
-
         m_tbar_txt = new QLabel(this);
             m_tbar_txt->setText("00%");
     }
 
     void video_interface::set_widgets_layout()
     {
-
-        QHBoxLayout* screens = new QHBoxLayout(this);
+        QHBoxLayout* screens = new QHBoxLayout();
         screens->addWidget(m_prw);
         screens->addWidget(m_prg);
-        QGridLayout* layout = new QGridLayout(this);
+        QGridLayout* layout = new QGridLayout();
         for(size_t i=0; i<MVAS_PRG_BUT_COUNT; i++)
         {
             layout->addWidget(m_prg_buts[i],1,i);
@@ -73,6 +70,22 @@ namespace mvas
         main_layout->addWidget(prox1);
         main_layout->addWidget(prox2);
 
+    }
+
+    int video_interface::set_graphics()
+    {
+        std::string main_stylesheet = mvas::load_stylesheet(get_src_path().append("/Linux/mvas_qt_interface/stylesheets/mvas_video_interface.css").c_str());
+
+        if(main_stylesheet != "")
+            setStyleSheet(main_stylesheet.c_str());
+        else
+            return MVAS_ERR_FILE_NOT_FOUND;
+
+        QPalette palette = QPalette();
+        palette.setColor(QPalette::Background, QColor(50,50,50));
+        setPalette(palette);
+
+        return MVAS_ERR_SUCCESS;
     }
 
     void video_interface::connect_widgets()

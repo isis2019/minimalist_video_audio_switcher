@@ -12,7 +12,6 @@ QPushButton
     font-size: 15px;
     color: #F4F7F5;
 }
-
 QPushButton:pressed
 {
     background-color: #FF0000;
@@ -31,6 +30,36 @@ QToolButton
     color: #BF0006;
 }
 
+QMenuBar
+{
+    background-color: #B00006;
+    font-family: Open;
+    font-size: 15px;
+    font: italic bold;
+    color: #DDDDDD;
+    border: none;
+}
+QMenuBar::item
+{
+}
+QMenuBar::item:selected
+{
+    background-color: #C0C0C0;
+    color: black;
+    border-radius: 5px;
+}
+
+QGroupBox
+{
+    border: 3px solid grey;
+    border-radius: 5px;
+    color: #F0F0F0;
+    font: bold;
+    font-size: 12px;
+    font-family: Open;
+    margin-top: 1ex; /* leave space at the top for the title */
+}
+
 QLabel
 {
     font-family: Open;
@@ -46,7 +75,6 @@ QSlider::handle:vertical
     height: 10px;
     margin: 0 -30px;
 }
-
 QSlider::groove:vertical
 {
     border: 1px solid #262626;

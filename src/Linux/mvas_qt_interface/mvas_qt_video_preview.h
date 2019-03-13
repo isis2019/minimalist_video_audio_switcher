@@ -7,6 +7,7 @@
 #pragma once
 
 #include <QtOpenGL>
+#include <iostream>
 
 namespace mvas
 {
@@ -22,5 +23,13 @@ namespace mvas
          * @param parent Widget's parent
          */
         video_preview(QWidget* parent);
+
+    public:
+        /**
+         * @brief resizeEvent call when the window is resized, it is used for
+         * keeping the video aspect ratio (16:9)
+         * @param event
+         */
+        void resizeEvent(QResizeEvent* event);
     };
 }

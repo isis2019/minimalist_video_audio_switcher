@@ -8,17 +8,15 @@
 
 namespace mvas
 {
-    const char* load_stylesheet(const char *path)
+    std::string load_stylesheet(const char *path)
     {
+        std::string buffer;
         std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
-        if(!file.is_open()) return  NULL;
-
-        std::cout << "Stylesheet loaded: " << path << std::endl;
-
+        if(!file.is_open()) return buffer;
         const size_t size_file = file.tellg();
-        char* buffer = new char[size_file];
+        buffer.assign(size_file,0);
         file.seekg(0, std::ios::beg);
-        file.read(buffer, size_file);
+        file.read(const_cast<char*>(buffer.data()), size_file);
         file.close();
         return buffer;
     }
@@ -27,13 +25,19 @@ namespace mvas
     {
         char buff[255] = {0};
         getcwd(buff,sizeof(buff));
-
         std::string path(buff);
-
         size_t ind = 0;
         while(path.substr(ind, 4) != "/src") ind++;
+        return path.substr(0,ind+4);
+    }
 
-        return path.substr(0,path.size()-(ind+4));
-
+    QGroupBox* wrap_in_groupbox(QWidget *widget_to_wrap,
+                                const QString &title,
+                                QWidget* parent)
+    {
+        QGroupBox* gr = new QGroupBox(title,parent);
+        gr->setLayout(widget_to_wrap->layout());
+        gr->setAlignment(Qt::AlignCenter);
+        return gr;
     }
 }

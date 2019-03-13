@@ -8,19 +8,20 @@
 
 namespace mvas
 {
-     audio_slice::audio_slice(const QString& title, QWidget *parent):QWidget(parent)
+     audio_slice::audio_slice(QWidget *parent):QWidget(parent)
      {
-         m_title = new QLabel(title,this);
          m_pan  = new QDial(this);
+         m_pan->setFixedSize(size().width()*0.5,
+                             size().width()*0.5);
          m_slider = new QSlider(this);
-         m_mute = new QPushButton("mute", this);
+         m_mute = new QPushButton("m", this);
+         m_mute->setFixedSize(size().width()*0.3,
+                              size().width()*0.3);
 
-         QVBoxLayout* layout = new QVBoxLayout(this);
-         layout->addWidget(m_title);
-         layout->addWidget(m_pan);
-         layout->addWidget(m_mute);
-         layout->addWidget(m_slider);
-         setLayout(layout);
+         QGridLayout* layout = new QGridLayout(this);
+         layout->addWidget(m_pan,0,0,Qt::AlignHCenter);
+         layout->addWidget(m_mute,1,0,Qt::AlignHCenter);
+         layout->addWidget(m_slider,2,0,Qt::AlignHCenter);
      }
 }
 

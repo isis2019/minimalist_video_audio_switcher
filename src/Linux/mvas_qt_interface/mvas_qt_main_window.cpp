@@ -10,28 +10,29 @@ namespace mvas
 {
     main_window::main_window() : QMainWindow(nullptr)
     {
-        set_graphics();
+        std::cout << "Set Graphics: " << get_error_name(set_graphics()) << std::flush;
         init_widgets();
         set_widgets_layout();
         connect_widgets();
-        listen_arduino_panel();
+        std::cout << "Listenning Arduino: " << get_error_name(listen_arduino_panel()) << std::flush;
     }
 
     void main_window::init_widgets()
     {
+        setFixedSize(QApplication::desktop()->screenGeometry().width()*0.9f,
+                       QApplication::desktop()->screenGeometry().height()*0.5f);
         m_video_gui = new video_interface(this);
         m_audio_gui = new audio_interface(this);
-        m_exit = new QToolButton(this);
-            m_exit->setText("X");
-            m_tb = new toolbar(this);
+        m_tb = new toolbar(this);
+            m_tb->setMaximumHeight(m_tb->m_device->height());
     }
 
     int main_window::set_graphics()
     {
-        const char* main_stylesheet = mvas::load_stylesheet(get_src_path().append("/Linux/mvas_qt_interface/stylesheets/mvas_main_window.css").c_str());
+        std::string main_stylesheet = mvas::load_stylesheet(get_src_path().append("/Linux/mvas_qt_interface/stylesheets/mvas_main_window.css").c_str());
 
-        if(main_stylesheet)
-            setStyleSheet(main_stylesheet);
+        if(main_stylesheet != "")
+            setStyleSheet(main_stylesheet.c_str());
         else
             return MVAS_ERR_FILE_NOT_FOUND;
 
@@ -39,54 +40,38 @@ namespace mvas
         palette.setColor(QPalette::Background, QColor(20,18,18));
         setPalette(palette);
 
-        setWindowFlags(Qt::CustomizeWindowHint);
-
         return MVAS_ERR_SUCCESS;
     }
 
     void main_window::set_widgets_layout()
     {
         QWidget* proxy = new QWidget(this);
-        QGridLayout* layout = new QGridLayout(this);
-            layout->addWidget(m_video_gui,1,1);
-            proxy->setLayout(layout);
-
-        QHBoxLayout* main_layout = new QHBoxLayout(this);
-        main_layout->addWidget(m_exit);
-        main_layout->addWidget(m_audio_gui);
-        main_layout->addWidget(proxy);
-
-        QVBoxLayout* top_layout = new QVBoxLayout(this);
-        top_layout->addWidget(m_tb);
-        top_layout->addLayout(main_layout);
-
-        QWidget* proxy2 = new QWidget(this);
-            proxy2->setLayout(top_layout);
-        setCentralWidget(proxy2);
+        QGridLayout* layout = new QGridLayout(proxy);
+        layout->addWidget(m_tb,0,0,1,2);
+        layout->addWidget(m_audio_gui,1,0,1,1);
+        layout->addWidget(m_video_gui,1,1,1,1,Qt::AlignHCenter);
+        setCentralWidget(proxy);
     }
 
     void main_window::connect_widgets()
     {
-        connect(m_exit, SIGNAL(clicked(bool)), this, SLOT(shutdown()));
     }
 
     int main_window::listen_arduino_panel()
     {
-        if(const char* panel_path = m_driver.open_panel_port().c_str())
+        std::string panel_path = m_driver.open_panel_port().c_str();
+        if(panel_path.size())
         {
             printf("path to panel:%s\n", panel_path);
             fflush(stdout);
         }
         else
             return MVAS_ERR_ARDUINO_PANEL_NOT_FOUND;
-
         QtConcurrent::run(&m_driver, &panel_driver::listen_to_port);
-
         QTimer* timer = new QTimer(this);
         timer->setInterval(10);
         connect(timer, SIGNAL(timeout()), this, SLOT(refresh()));
         timer->start();
-
         return MVAS_ERR_SUCCESS;
     }
 

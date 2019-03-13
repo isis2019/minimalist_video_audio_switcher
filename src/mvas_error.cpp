@@ -14,12 +14,26 @@ namespace mvas
         const int max_err = 2;
         const char* err_lut[max_err-min_err+1] =
         {
-            "mvas_err: Success\n",
-            "mvas_err: File not found\n",
-            "mvas_err: Arduino panel not found\n"
+            "Success",
+            "File not found",
+            "Arduino panel not found"
         };
 
         printf("%s", err_lut[err]);
         fflush(stdout);
+    }
+
+    std::string get_error_name(const int err)
+    {
+        const int min_err = 0;
+        const int max_err = 2;
+        const char* err_lut[max_err-min_err+1] =
+        {
+            "Success",
+            "File not found",
+            "Arduino panel not found"
+        };
+
+        return std::string(err_lut[err]);
     }
 }

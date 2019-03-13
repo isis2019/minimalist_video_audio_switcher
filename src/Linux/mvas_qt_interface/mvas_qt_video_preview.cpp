@@ -10,6 +10,12 @@ namespace mvas
 {
     video_preview::video_preview(QWidget* parent) : QGLWidget(parent)
     {
-        setFixedSize(1920/5,1080/5);
+    }
+
+    void video_preview::resizeEvent(QResizeEvent *event)
+    {
+        size_t new_width = event->size().width();
+        size_t new_height = (new_width/16)*9;
+        QWidget::resize(new_width,new_height);
     }
 }
