@@ -16,7 +16,8 @@ SOURCES += \
     mvas_qt_audio_interface.cpp \
     mvas_qt_devices_windows.cpp \
     ../include/DeckLinkAPIDispatch.cpp \
-    mvas_qt_toolbar.cpp
+    mvas_qt_toolbar.cpp \
+    ../mvas_blackmagic_decklink/mvas_blackmagic_decklink.cpp
 
 HEADERS += \
     mvas_qt_main_window.h \
@@ -29,7 +30,8 @@ HEADERS += \
     mvas_qt_audio_interface.h \
     ../../mvas_macros.h \
     mvas_qt_devices_windows.h \
-    mvas_qt_toolbar.h
+    mvas_qt_toolbar.h \
+    ../mvas_blackmagic_decklink/mvas_blackmagic_decklink.h
 
 DISTFILES += \
     stylesheets/mvas_main_window.css \
