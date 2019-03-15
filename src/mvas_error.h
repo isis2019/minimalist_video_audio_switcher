@@ -14,10 +14,10 @@
 #define MVAS_ERR_SUCCESS 0
 /** Send when a file cannot be open **/
 #define MVAS_ERR_FILE_NOT_FOUND 1
-/**Send when the arduino panel is not detected **/
+/** Send when the arduino panel is not detected **/
 #define MVAS_ERR_ARDUINO_PANEL_NOT_FOUND 2
-
-#define MVAS_ERROR_NAMES (Success, File not found, Panel not found)
+/** Send when the decklink is not detected **/
+#define MVAS_ERR_DECKLINK_NOT_FOUND 3
 
 namespace mvas
 {

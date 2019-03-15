@@ -10,21 +10,32 @@ namespace mvas
 {
     main_window::main_window() : QMainWindow(nullptr)
     {
-        std::cout << "Set Graphics: " << get_error_name(set_graphics()) << std::flush;
+        /** Initialize the decklink infos**/
+        std::cout << "Get infos from the Blackmagic Decklink: " << get_error_name(m_bm_driver.initialize_card_infos()) << std::endl;
+
+        /** Listen for the arduino panel **/
+        std::cout << "Listenning Arduino: " << get_error_name(listen_arduino_panel()) << std::endl;
+
+        /** Set the graphics for the user interface **/
+        std::cout << "Set Graphics: " << get_error_name(set_graphics()) << std::endl;
+
+        /** Initialize the widgets inside the window **/
         init_widgets();
+
+        /** Organize the widgets on the window **/
         set_widgets_layout();
+
+        /** Connect all the functionnality for the widgets **/
         connect_widgets();
-        std::cout << "Listenning Arduino: " << get_error_name(listen_arduino_panel()) << std::flush;
     }
 
     void main_window::init_widgets()
     {
         setFixedSize(QApplication::desktop()->screenGeometry().width()*0.9f,
-                       QApplication::desktop()->screenGeometry().height()*0.5f);
+                        QApplication::desktop()->screenGeometry().height()*0.5f);
         m_video_gui = new video_interface(this);
         m_audio_gui = new audio_interface(this);
-        m_tb = new toolbar(this);
-            m_tb->setMaximumHeight(m_tb->m_device->height());
+        m_tb = new toolbar(&m_bm_driver,this);
     }
 
     int main_window::set_graphics()

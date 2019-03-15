@@ -68,7 +68,6 @@ namespace mvas
          */
         blackmagic_decklink_driver();
 
-    private:
         /**
          * @brief initialize_card_infos
          * Will initialize card informations

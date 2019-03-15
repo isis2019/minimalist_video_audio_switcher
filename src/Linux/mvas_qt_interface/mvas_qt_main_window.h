@@ -42,6 +42,8 @@ namespace mvas
         video_interface* m_video_gui;
         /**< Object for manipulating panel IO **/
         panel_driver m_driver;
+        /** Object for manipulating the decklink **/
+        blackmagic_decklink_driver m_bm_driver;
         /**< Toolbar object for displaying information **/
         toolbar* m_tb;
 
