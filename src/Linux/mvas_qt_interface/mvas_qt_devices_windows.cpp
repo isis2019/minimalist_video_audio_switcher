@@ -13,7 +13,7 @@ namespace mvas
     void devices_infos_window::init_widgets()
     {
         /** For each interface **/
-        for(size_t i=0; i<m_driver.infos.io_count; i++)
+        for(size_t i=0; i< m_driver.infos.model_names.size(); i++)
         {
             QString title_info = QString("INFORMATIONS ").append('\n');
             title_info.append("Model Name : ").append(m_driver.infos.model_names[i].c_str()).append('\n');
@@ -41,9 +41,10 @@ namespace mvas
                 title_info.append(tr("HD-mode keying supported: "));
                 title_info.append(QString::number(m_driver.infos.support_hd_keyings[i]));
 
-                //Add final tab
-                this->addTab(new QLabel(title_info) ,m_driver.infos.model_names[i].c_str());
+
             }
+            //Add final tab
+            this->addTab(new QLabel(title_info) , m_driver.infos.model_names[i].c_str());
 
         }
     }

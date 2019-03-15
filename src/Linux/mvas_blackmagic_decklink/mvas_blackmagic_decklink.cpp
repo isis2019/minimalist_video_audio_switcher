@@ -16,7 +16,7 @@ namespace mvas
 
     int blackmagic_decklink_driver::initialize_card_infos()
     {
-        int count;
+        int count = 0;
         IDeckLinkIterator*  DeckLinkIterator = NULL;
         DeckLinkIterator = CreateDeckLinkIteratorInstance();
         IDeckLinkAttributes* DeckLinkAttributes;
