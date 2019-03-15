@@ -60,7 +60,10 @@ namespace mvas
     class blackmagic_decklink_driver
     {
     public:
+        /**< Contains card info **/
         blackmagic_decklink_info infos;
+        /**< flag saying if the card is initialize and available **/
+        bool is_available;
 
     public:
         /**
@@ -74,5 +77,11 @@ namespace mvas
          * @return error number if one occure
          */
         int initialize_card_infos();
+
+        /**
+         * @brief availability telle if the driver was initialized
+         * @return false if not correctly initialize
+         */
+        bool availability();
     };
 }

@@ -164,15 +164,23 @@ namespace mvas
             }
             if(count == 0)
             {
+                is_available = false;
                 return MVAS_ERR_DECKLINK_NOT_FOUND;
             }
         }
         else
         {
+            is_available = false;
             return MVAS_ERR_DECKLINK_NOT_FOUND;
         }
 
+        is_available = true;
         DeckLinkIterator->Release();
         return MVAS_ERR_SUCCESS;
+    }
+
+    bool blackmagic_decklink_driver::availability()
+    {
+        return is_available;
     }
 }

@@ -31,11 +31,12 @@ namespace mvas
 
     void main_window::init_widgets()
     {
-        setFixedSize(QApplication::desktop()->screenGeometry().width()*0.9f,
-                        QApplication::desktop()->screenGeometry().height()*0.5f);
+        m_tb = new toolbar(&m_bm_driver,this);
         m_video_gui = new video_interface(this);
         m_audio_gui = new audio_interface(this);
-        m_tb = new toolbar(&m_bm_driver,this);
+
+        if(!m_bm_driver.availability())
+            m_video_gui->setDisabled(true);
     }
 
     int main_window::set_graphics()
@@ -56,6 +57,8 @@ namespace mvas
 
     void main_window::set_widgets_layout()
     {
+        setFixedSize(QApplication::desktop()->screenGeometry().width()*0.9f,
+                        QApplication::desktop()->screenGeometry().height()*0.5f);
         QWidget* proxy = new QWidget(this);
         QGridLayout* layout = new QGridLayout(proxy);
         layout->addWidget(m_tb,0,0,1,2);
