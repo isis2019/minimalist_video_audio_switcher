@@ -1,0 +1,71 @@
+h1,h2,h3 {
+    color: #292F36
+}
+
+colorwhite {
+    color: white
+}
+html {
+    font-family: 'Open Sans', sans-serif;
+    src: url('./../font/OpenSans-Regular.ttf')
+}
+
+#myVideo {
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-width: 100%;
+    min-height: auto;
+    width: auto;
+    height: auto;
+    z-index: -100;
+}
+
+.cadre {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 40%;
+    overflow: hidden;
+    margin-left: 30%;
+    margin-top: 1%;
+    background-color: white;
+    border: 1px solid black;
+    box-shadow: 8px 8px 0px #1f7a8c;
+}
+
+.logo {
+    margin-top:3%;
+    width: 100%;
+    text-align: center;
+    z-index:0;
+}
+.label {
+    float: left;
+    margin-left: 5%;
+}
+
+.envoyer {
+    float: center;
+    margin-left: auto;
+}
+
+
+footer{
+    margin-top: 5%;
+    text-align: center
+}
+
+.background 
+{
+    background-image: url('./../image/background.jpg');
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    position:relative;
+    color:white;
+    font-family: 'Open Sans', sans-serif;
+    src: url('./../font/OpenSans-Regular.ttf');
+    font-size: 25px;
+}
+.pgm-pvw
+{ 

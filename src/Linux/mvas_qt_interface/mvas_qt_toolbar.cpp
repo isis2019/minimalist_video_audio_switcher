@@ -1,4 +1,5 @@
 #include "mvas_qt_toolbar.h"
+#include <QPushButton>
 
 namespace mvas
 {

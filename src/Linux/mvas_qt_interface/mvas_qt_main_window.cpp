@@ -74,6 +74,7 @@ namespace mvas
     int main_window::listen_arduino_panel()
     {
         std::string panel_path = m_driver.open_panel_port().c_str();
+
         if(panel_path.size())
         {
             printf("path to panel:%s\n", panel_path);
@@ -106,9 +107,9 @@ namespace mvas
         }
 
         static uint8_t old_prg = 0;
-        if(old_prg != m_driver.values.prg_but_pressed)
+        if (old_prg != m_driver.values.prg_but_pressed)
         {
-            for(size_t i=0; i<MVAS_PRG_BUT_COUNT; i++)
+            for (size_t i = 0; i < MVAS_PRG_BUT_COUNT; i++)
                 m_video_gui->m_prg_buts[i]->setDown(false);
 
             m_video_gui->m_prg_buts[m_driver.values.prg_but_pressed-MVAS_PRG1_PIN]->setDown(true);
@@ -116,7 +117,7 @@ namespace mvas
         }
 
         static uint8_t old_potars[MVAS_AUDIO_SLICE_COUNT] = {0};
-        for(size_t i=0; i<MVAS_AUDIO_SLICE_COUNT; i++)
+        for (size_t i = 0; i < MVAS_AUDIO_SLICE_COUNT; i++)
         {
             if(old_potars[i] != m_driver.values.potars[i])
             {

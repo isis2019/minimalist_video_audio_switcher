@@ -2,7 +2,7 @@
 
 namespace mvas
 {
-  video_panel::video_panel()
+  video_panel::video_panel(LiquidCrystal_I2C* lcd) : m_lcd(lcd)
   {
   }
 
@@ -19,6 +19,9 @@ namespace mvas
       
     for(size_t i=0; i<MVAS_PRG_BUT_COUNT; i++)
       pinMode(MVAS_PRG1_PIN+i, INPUT_PULLUP);
+
+      m_lcd->begin();
+      m_lcd->backlight();
   }
 
   uint16_t video_panel::tbar_value() const
@@ -35,7 +38,7 @@ namespace mvas
     buff[3] = 0;
 
     //Smoothing values
-    uint16_t val = exponential_smoothing(tbar_value(), 0.1f);
+    uint16_t val = exponential_smoothing(tbar_value(), 0.5f);
     
     static uint16_t prev_val = val;
 
@@ -45,6 +48,8 @@ namespace mvas
       memcpy(buff+1, &val, 2);
       Serial.write(buff, 4);      
       prev_val = val;
+
+      print_value_to_lcd('T', 0, val); 
       return true;
     }
 
@@ -55,29 +60,32 @@ namespace mvas
   {
     for(size_t i=0; i<MVAS_PRW_BUT_COUNT+MVAS_PRG_BUT_COUNT; i++)
     {
-      if(!digitalRead(MVAS_PRW1_PIN+i))
-      {
+      if(digitalRead(MVAS_PRW1_PIN+i) == 0)
+      { 
         Serial.write(serial_packet('B',0,i-MVAS_PRW1_PIN),4);
+        print_value_to_lcd('B', 0, MVAS_PRW1_PIN+i); 
       }
     }
   }
 
   void video_panel::write_potars_to_serial() const
-  {
+  {    
     static uint16_t old_potar[MVAS_AUDIO_SLICE_COUNT] = {0};
     
-    uint16_t tmp = 0;
-    
-    if(old_potar[0] != (tmp=exponential_smoothing(analogRead(A1), 0.1f)) )
+    uint16_t tmps[MVAS_AUDIO_SLICE_COUNT] = {0};
+
+    if(old_potar[0] != (tmps[0]=analogRead(A1)) )
     {
-      Serial.write(serial_packet('P',tmp,0),4);
-      old_potar[0] = tmp;
+      Serial.write(serial_packet('P',tmps[0],0),4);
+      old_potar[0] = tmps[0];
+      print_value_to_lcd('P', 0, old_potar[0]);  
     }
 
-    if(old_potar[1] != (tmp=exponential_smoothing(analogRead(A2), 0.1f)) )
+    if(old_potar[1] != (tmps[1]=analogRead(A2)) )
     {
-      Serial.write(serial_packet('P',tmp,1),4);
-      old_potar[1] = tmp;
+      Serial.write(serial_packet('P',tmps[1],1),4);
+      old_potar[1] = tmps[1];
+      print_value_to_lcd('P', 1, old_potar[1]);
     }
   }
 
@@ -94,6 +102,62 @@ namespace mvas
         buf[ind] = tmp;
         ind ++;
       }
+    }
+  }
+
+  void video_panel::print_value_to_lcd(const char type, const int num, const int val)
+  {
+    m_lcd->setCursor(0,0);
+
+    switch (type)
+    {
+    case 'B':
+      m_lcd->print("Bouton ");
+      m_lcd->setCursor(0,1);
+      if (val > 43)
+      {
+        m_lcd->print("PRG ");
+        m_lcd->print(val-43);
+        m_lcd->print("               ");
+        
+      }
+      else if(val < 44)
+      {
+        m_lcd->print("PRW ");
+        m_lcd->print(val-39);
+        m_lcd->print("               ");
+      }
+      break;
+
+    case 'F':
+      m_lcd->print("Fader    ");
+      break;
+
+    case 'P':
+      m_lcd->print("Potar ");
+      m_lcd->print(num+1);
+      m_lcd->setCursor(0,1);
+
+      if (val < 500)
+      {
+        m_lcd->print("left    ");
+      }
+      else if (val > 512-24 && val < 512+24)
+      {
+        m_lcd->print("center     ");
+      }
+      else if (val > 524)
+      {
+        m_lcd->print("right      ");
+      }
+      break;
+
+    case 'T':
+      m_lcd->print("T-Bar    ");
+      m_lcd->setCursor(0,1);
+      m_lcd->print((float)val * (100.0f/1024.0f));
+      m_lcd->print("%");
+      break;
     }
   }
 }

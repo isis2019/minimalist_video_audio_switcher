@@ -16,6 +16,8 @@ namespace mvas
 
     std::string panel_driver::open_panel_port()
     {
+        std::cout << "Openning" << std::endl;
+
         for(int i=MVAS_MIN_PORT_INDEX; i<MVAS_MAX_PORT_INDEX; ++i)
         {
             std::stringstream ss;
@@ -76,6 +78,9 @@ namespace mvas
 
             case 'P':
                 std::memcpy(reinterpret_cast<char*>(&values.potars+tmp[3]), tmp+1, 2);
+
+                std::cout << (int)tmp[3] << ' ' << values.potars[tmp[3]] << std::endl;
+
             break;
 
             default:
